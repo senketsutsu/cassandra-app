@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Reservation</title>
+</head>
+<body>
+    <h1>Update Reservation</h1>
+    <form action="{{ url_for('update_reservation_route') }}" method="post">
+        <label for="res_book">Current Book Title:</label>
+        <input type="text" id="res_book" name="res_book" required>
+        <label for="new_book">New Book Title:</label>
+        <input type="text" id="new_book" name="new_book" required>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

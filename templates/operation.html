@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store - Operations</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}</h1>
+    <h2>Select an operation:</h2>
+    <form action="/perform_operation" method="post">
+        <input type="hidden" name="username" value="{{ username }}">
+        <button type="submit" name="operation" value="list_books">List All Books</button>
+        <button type="submit" name="operation" value="show_available_books">View Available Books</button>
+        <button type="submit" name="operation" value="reserve_book">Reserve a Book</button>
+        <button type="submit" name="operation" value="user_reservations">View Your Reservations</button>
+        <button type="submit" name="operation" value="update_reservation_route">Update Reservation</button>
+        <button type="submit" name="operation" value="delete_reservation_route">Delete Reservation</button>
+    </form>
+</body>
+</html>

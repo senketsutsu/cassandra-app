@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reserve Book</title>
+</head>
+<body>
+    <h1>Reserve a Book</h1>
+    <form action="{{ url_for('reserve_book') }}" method="post">
+        <label for="book_id">Book ID:</label>
+        <input type="text" id="book_id" name="book_id" required>
+        <button type="submit">Reserve</button>
+    </form>
+</body>
+</html>
