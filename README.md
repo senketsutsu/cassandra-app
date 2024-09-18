@@ -16,6 +16,9 @@ To run the Cassandra:
 docker-compose up --build
 ```
 
+Wait for the app to be ready (you can look at the current status on the docker app). 
+The app will be available at: http://localhost:5555/
+
 To close:
 ```sh
 docker-compose down
