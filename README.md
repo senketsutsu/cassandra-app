@@ -18,6 +18,8 @@ docker-compose up --build
 
 Wait for the app to be ready (you can look at the current status on the docker app). 
 The app will be available at: http://localhost:5555/
+The app is not the prettiest because my main focus was to be able to work well with the Cassandra cluster (which didn't want to cooperate for the first few months (if not the cluster then not the app)).
+The most important part is that it is working!!!
 
 To close:
 ```sh
