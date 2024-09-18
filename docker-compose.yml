@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+  cassandra-node1:
+    depends_on:
+      cassandra-node2:
+        condition: service_healthy
+      cassandra-node3:
+        condition: service_healthy
+    environment:
+      CASSANDRA_CLUSTER_NAME: cassandra-cluster
+      CASSANDRA_SEEDS: cassandra-node1,cassandra-node2,cassandra-node3
+    image: cassandra:4.1.1
+    networks:
+      - cassandra-network
+    ports:
+      - "9042:9042"
+    volumes:
+      - ./scripts/init-db.cql:/scripts/init-db.cql
+      - cassandra-node1:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD", "nodetool", "status"]
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 30s
+
+  cassandra-node2:
+    environment:
+      CASSANDRA_CLUSTER_NAME: cassandra-cluster
+      CASSANDRA_SEEDS: cassandra-node1,cassandra-node2,cassandra-node3
+    image: cassandra:4.1.1
+    networks:
+      - cassandra-network
+    volumes:
+      - cassandra-node2:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD", "nodetool", "status"]
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 30s
+
+  cassandra-node3:
+    environment:
+      CASSANDRA_CLUSTER_NAME: cassandra-cluster
+      CASSANDRA_SEEDS: cassandra-node1,cassandra-node2,cassandra-node3
+    image: cassandra:4.1.1
+    networks:
+      - cassandra-network
+    volumes:
+      - cassandra-node3:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD", "nodetool", "status"]
+      interval: 30s
+      retries: 3
+      start_period: 30s
+      timeout: 30s
+
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      cassandra-node1:
+        condition: service_healthy
+    environment:
+      CASSANDRA_SEEDS: cassandra-node1,cassandra-node2,cassandra-node3
+    networks:
+      - cassandra-network
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./templates:/app/templates
+
+networks:
+  cassandra-network:
+    driver: bridge
+
+volumes:
+  cassandra-node1:
+  cassandra-node2:
+  cassandra-node3:
